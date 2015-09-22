@@ -336,6 +336,22 @@ class OoyalaApi
         }
         return $params;
     }
+	
+	/**
+     * Gets the page_token from the next_page element in a GET call response. 
+     *
+     * @param string $responseBody  Full response from a GET call.
+     * @return string The page_token id if there is one, or NULL if there isn't. 
+     */
+    public function getPageToken($responseBody){
+    	$nextPage = $responseBody->{"next_page"};
+		if(is_null($nextPage)){
+    		return NULL;
+    	}else {
+			parse_str($nextPage, $nextParams);
+			return $nextParams["page_token"];
+    	}
+    }
 }
 
 /**
